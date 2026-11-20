@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "game-h5.zip"
+      - "hotfix/**"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -34,6 +36,14 @@ jobs:
           test -d _site/js
           test -d _site/css
           touch _site/.nojekyll
+      - name: Apply H5 web asset and typography hotfixes
+        run: |
+          cp hotfix/web-assets.js _site/js/web-assets-hotfix.js
+          cp hotfix/typography.css _site/css/typography-hotfix.css
+          sed -i 's@</head>@<link rel="stylesheet" href="css/typography-hotfix.css"><script src="js/web-assets-hotfix.js"></script></head>@' _site/index.html
+          grep -q 'web-assets-hotfix.js' _site/index.html
+          test -f _site/css/typography-hotfix.css
+          test -f _site/js/web-assets-hotfix.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
