@@ -1,0 +1,7 @@
+/* Actual hand-painted characters from the user's reference image. No SVG. */
+#view-estate .estate-worker-layer{display:none!important}
+#view-estate .estate-raster-layer{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+#view-estate .estate-raster-person{position:absolute;display:block;width:6.5%;height:auto;max-width:none;object-fit:contain;transform:translate(-50%,-100%);image-rendering:auto;filter:drop-shadow(0 1px 1px #14271e50);user-select:none}
+#view-estate .estate-raster-person.still{animation:estateRasterIdle 3s ease-in-out infinite alternate}
+@keyframes estateRasterIdle{from{translate:0 0}to{translate:0 -2px}}
+@media(prefers-reduced-motion:reduce){#view-estate .estate-raster-person{animation:none!important}}
