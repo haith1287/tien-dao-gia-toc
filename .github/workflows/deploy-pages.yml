@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "game-h5.zip"
+      - "TienDaoGiaToc_Sprint3F45_Preview.zip"
       - "hotfix/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
@@ -50,6 +51,24 @@ jobs:
           test -f _site/js/estate-raster.js
           test -f _site/css/estate-scroll.css
           test -f _site/css/estate-raster.css
+      - name: Publish optional 3F.4.5 art preview without changing live gameplay
+        run: |
+          if [ -f TienDaoGiaToc_Sprint3F45_Preview.zip ]; then
+            mkdir -p _site/preview
+            unzip -q TienDaoGiaToc_Sprint3F45_Preview.zip -d /tmp/tdgt-preview
+            if [ -f /tmp/tdgt-preview/TienDaoGiaToc_Sprint3F45_Preview/index.html ]; then
+              cp -R /tmp/tdgt-preview/TienDaoGiaToc_Sprint3F45_Preview/. _site/preview/
+            elif [ -f /tmp/tdgt-preview/index.html ]; then
+              cp -R /tmp/tdgt-preview/. _site/preview/
+            else
+              echo "Preview archive missing index.html" >&2
+              exit 1
+            fi
+            test -f _site/preview/assets/tien-son.webp
+            test -f _site/preview/assets/nam-walk.webp
+            test -f _site/preview/assets/nu-walk.webp
+            test -f _site/preview/assets/cuon-thu.webp
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
