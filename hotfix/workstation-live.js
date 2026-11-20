@@ -13,7 +13,7 @@ function work(){
  if(source.length<5)return;
  for(const node of grid.querySelectorAll('.estate-node.is-built')){
    const btn=node.querySelector('.estate-node-main[onclick]');
-   const m=btn&&btn.getAttribute('onclick').match(/openEstateDetailModal\\(['"]([^'"]+)['"]\\)/);
+   const m=btn&&btn.getAttribute('onclick').match(/openEstateDetailModal\(['"]([^'"]+)['"]\)/);
    const id=m&&m[1];
    if(!id||!IDS.includes(id))continue;
    let actor=node.querySelector('.tdgt-live-worker');
