@@ -51,6 +51,14 @@ jobs:
           test -f _site/js/estate-raster.js
           test -f _site/css/estate-scroll.css
           test -f _site/css/estate-raster.css
+      - name: Enable stationary profession activities on official game
+        run: |
+          cp hotfix/workstation-live.js _site/js/workstation-live.js
+          cp hotfix/workstation-live.css _site/css/workstation-live.css
+          sed -i 's@</head>@<link rel="stylesheet" href="css/workstation-live.css"><script defer src="js/workstation-live.js"></script></head>@' _site/index.html
+          grep -q 'workstation-live.js' _site/index.html
+          test -s _site/js/workstation-live.js
+          test -s _site/css/workstation-live.css
       - name: Publish optional 3F.4.5 art preview without changing live gameplay
         run: |
           if [ -f TienDaoGiaToc_Sprint3F45_Preview.zip ]; then
