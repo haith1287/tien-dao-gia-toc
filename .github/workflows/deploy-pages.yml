@@ -1,0 +1,42 @@
+name: Publish Tien Dao Gia Toc H5
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "game-h5.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand H5 game package
+        run: |
+          test -f game-h5.zip || { echo "Missing game-h5.zip at repository root"; exit 1; }
+          mkdir -p _site
+          unzip -q game-h5.zip -d _site
+          test -f _site/index.html
+          test -d _site/assets/images
+          test -d _site/js
+          test -d _site/css
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
