@@ -40,13 +40,15 @@ jobs:
         run: |
           cp hotfix/web-assets.js _site/js/web-assets-hotfix.js
           cp hotfix/typography.css _site/css/typography-hotfix.css
+          cp hotfix/estate-scroll.css _site/css/estate-scroll.css
           cp hotfix/estate-raster.css _site/css/estate-raster.css
           cp hotfix/estate-raster.js _site/js/estate-raster.js
-          sed -i 's@</head>@<link rel="stylesheet" href="css/typography-hotfix.css"><link rel="stylesheet" href="css/estate-raster.css"><script src="js/web-assets-hotfix.js"></script><script src="js/estate-raster.js"></script></head>@' _site/index.html
+          sed -i 's@</head>@<link rel="stylesheet" href="css/typography-hotfix.css"><link rel="stylesheet" href="css/estate-scroll.css"><link rel="stylesheet" href="css/estate-raster.css"><script src="js/web-assets-hotfix.js"></script><script src="js/estate-raster.js"></script></head>@' _site/index.html
           grep -q 'web-assets-hotfix.js' _site/index.html
           test -f _site/css/typography-hotfix.css
           test -f _site/js/web-assets-hotfix.js
           test -f _site/js/estate-raster.js
+          test -f _site/css/estate-scroll.css
           test -f _site/css/estate-raster.css
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
