@@ -55,10 +55,13 @@ jobs:
         run: |
           cp hotfix/workstation-live.js _site/js/workstation-live.js
           cp hotfix/workstation-live.css _site/css/workstation-live.css
+          mkdir -p _site/assets/workstation
+          cp hotfix/profession-atlas.webp _site/assets/workstation/profession-atlas.webp
           sed -i 's@</head>@<link rel="stylesheet" href="css/workstation-live.css"><script defer src="js/workstation-live.js"></script></head>@' _site/index.html
           grep -q 'workstation-live.js' _site/index.html
           test -s _site/js/workstation-live.js
           test -s _site/css/workstation-live.css
+          test -s _site/assets/workstation/profession-atlas.webp
       - name: Publish optional 3F.4.5 art preview without changing live gameplay
         run: |
           if [ -f TienDaoGiaToc_Sprint3F45_Preview.zip ]; then
